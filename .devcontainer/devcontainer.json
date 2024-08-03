@@ -24,8 +24,14 @@
 		"vscode": {
 			"extensions": [
 				"ms-azuretools.vscode-docker",
+				 "dbaeumer.vscode-eslint",
 				"ms-python.python"
-			]
+			],
+			"settings": {
+				"terminal.integrated.fontSize": 20,
+				"editor.fontSize": 20,
+				"workbench.colorTheme": "Default Dark+ Experimental"
+			}
 		}
 	}
 
