@@ -44,8 +44,8 @@ from time import strftime
 # LOGGER.addHandler(cw_handler)
 
 
-# xray_url = os.getenv("AWS_XRAY_URL")
-# xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 
 
@@ -66,7 +66,7 @@ tracer = trace.get_tracer(__name__)
 app = Flask(__name__)
 
 #xray------------------------------
-# XRayMiddleware(app, xray_recorder)
+XRayMiddleware(app, xray_recorder)
 
 # Create a flask and initialize automatic instrumentation with Flask
 
@@ -83,6 +83,8 @@ cors = CORS(
   allow_headers="content-type,if-modified-since",
   methods="OPTIONS,GET,HEAD,POST"
 )
+
+#cloud watch --------------------------------------
 # @app.after_request
 # def after_request(response):
 #     timestamp = strftime('[%Y-%b-%d %H:%M]')
@@ -125,6 +127,7 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
+@xray_recorder.capture('cativities_home')
 def data_home():
   data = HomeActivities.run()
   return data, 200
@@ -154,6 +157,7 @@ def data_search():
   return
 
 @app.route("/api/activities", methods=['POST','OPTIONS'])
+@xray_recorder.capture('cativities_show')
 @cross_origin()
 def data_activities():
   user_handle  = 'andrewbrown'
