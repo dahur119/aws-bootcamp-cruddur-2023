@@ -14,6 +14,8 @@ services:
       AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      APP_AWS_USER_POOLS_ID: "us-west-2_q2nC9zWjb"
+      APP_CLIENT_ID: "38nqualvuk1nqcrjhmar2ljsk8"
     build: ./backend-flask
     ports:
       - "4567:4567"
@@ -25,8 +27,8 @@ services:
       REACT_APP_BACKEND_URL: "https://${CODESPACE_NAME}-4567.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
       REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
-      REACT_APP_AWS_USER_POOLS_ID: "us-east-1_YNpQTW6vN"
-      REACT_APP_CLIENT_ID: "5shdpnla5u2sprecgebo4a49an"
+      REACT_APP_AWS_USER_POOLS_ID: "us-west-2_q2nC9zWjb"
+      REACT_APP_CLIENT_ID: "38nqualvuk1nqcrjhmar2ljsk8"
     build: ./frontend-react-js
     ports:
       - "3000:3000"
