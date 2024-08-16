@@ -15,6 +15,11 @@ tasks:
     command: |
       cd frontend-react-js
       npm i  
+  
+  - name: react-js
+    command: |
+      cd backend-flask
+      npm install -r requirements.txt
        
 
 
