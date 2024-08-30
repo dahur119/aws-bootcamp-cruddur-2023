@@ -1,28 +1,13 @@
-
-
 tasks:
-  - name: aws-211
+  - name: aws-cli
     env:
-      AWS_CLS AUTO PROMPT: on-partial
+      AWS_CLI_AUTO_PROMPT: on-partial
     init: |
       cd /workspace
       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       unzip awscliv2.zip
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
-
-  - name: react
-    command: |
-      cd frontend-react-js
-      npm i  
-  
-  - name: react-js
-    command: |
-      cd backend-flask
-      npm install -r requirements.txt
-       
-
-
   - name: postgres
     init: |
       curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
@@ -31,13 +16,19 @@ tasks:
       sudo apt install -y postgresql-client-13 libpq-dev
     command: |
       export GITPOD_IP=$(curl ifconfig.me)
-      source  "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
-
+      source  "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
+  - name: flask
+    command: |
+      cd backend-flask
+      pip install -r requirements.txt
+  - name: react-js
+    command: |
+      cd frontend-react-js
+      npm i
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
-    - mtxr.sqltools-driver-pg
-
+    # - cweijan.vscode-postgresql-client2
 
 ports:
   - name: frontend
