@@ -5,10 +5,10 @@ from jose.exceptions import JOSEError
 from jose.utils import base64url_decode
 
 class FlaskAWSCognitoError(Exception):
-    pass
+  pass
 
 class TokenVerifyError(Exception):
-    pass
+  pass
 
 def extract_access_token(request_headers):
     access_token = None
@@ -25,22 +25,20 @@ class CognitoJwtToken:
         self.user_pool_id = user_pool_id
         self.user_pool_client_id = user_pool_client_id
         self.claims = None
-        self.request_client = request_client or requests.get
+        if not request_client:
+            self.request_client = requests.get
+        else:
+            self.request_client = request_client
         self._load_jwk_keys()
+
 
     def _load_jwk_keys(self):
         keys_url = f"https://cognito-idp.{self.region}.amazonaws.com/{self.user_pool_id}/.well-known/jwks.json"
         try:
             response = self.request_client(keys_url)
-            response.raise_for_status()  # Raises an HTTPError for bad responses
-            response_json = response.json()
-            if "keys" not in response_json:
-                raise FlaskAWSCognitoError("The 'keys' field is missing from the JWKS response")
-            self.jwk_keys = response_json["keys"]
+            self.jwk_keys = response.json()["keys"]
         except requests.exceptions.RequestException as e:
-            raise FlaskAWSCognitoError(f"Request failed: {str(e)}") from e
-        except ValueError as e:
-            raise FlaskAWSCognitoError(f"Error parsing JSON: {str(e)}") from e
+            raise FlaskAWSCognitoError(str(e)) from e
 
     @staticmethod
     def _extract_headers(token):

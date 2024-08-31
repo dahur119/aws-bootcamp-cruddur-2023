@@ -57,7 +57,6 @@ class CreateActivity:
       'expires_at': expires_at
     })
     return uuid
-    
   def query_object_activity(uuid):
     sql = db.template('activities','object')
     return db.query_object_json(sql,{
