@@ -1,6 +1,7 @@
 {
     "name": "Cruddur Configuration",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "remoteUser": "root", // Add this line to ensure root privileges
     "features": {
         "ghcr.io/devcontainers/features/aws-cli:1": {}
     },
@@ -22,11 +23,5 @@
             }
         }
     },
-    "postCreateCommand": "sudo apt update && sudo apt install -y postgresql-client-13 libpq-dev",
-    "forwardPorts": [
-        3000,
-        4567,
-        2000
-    ],
-    "remoteUser": "vscode"
+    "postCreateCommand": "curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && echo \"deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main\" | tee /etc/apt/sources.list.d/pgdg.list && apt update && apt install -y postgresql-client-13 libpq-dev"
 }
