@@ -34,7 +34,7 @@ def lambda_handler(event, context):
         print(sql)
         
         # Check the connection URL
-        conn_url = os.getenv('CONNECTION_URL')
+        conn_url = os.getenv('PROD_CONNECTION_URL')
         print(f'Connection URL: {conn_url}')
         
         conn = psycopg2.connect(conn_url)
